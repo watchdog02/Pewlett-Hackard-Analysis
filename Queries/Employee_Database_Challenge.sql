@@ -36,3 +36,18 @@ INTO title_count
 FROM unique_title AS ue
 GROUP BY ue.title
 ORDER BY COUNT(ue.title) DESC;
+
+
+SELECT DISTINCT ON (e.emp_no) e.emp_no, e.first_name,
+e.last_name, e.birth_date, 
+de.from_date, de.to_date, 
+ti.title
+INTO mentorship
+FROM employees AS e
+INNER JOIN dept_emp as de
+	ON e.emp_no = de.emp_no
+LEFT JOIN titles as ti
+	ON e.emp_no = ti.emp_no
+WHERE e.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
+	AND  de.to_date='9999-01-01'
+ORDER BY e.emp_no, ti.title ASC;
